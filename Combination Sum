@@ -1,0 +1,36 @@
+class Solution
+{
+    //Function to return a list of indexes denoting the required 
+    //combinations whose sum is equal to given number.
+    static ArrayList<ArrayList<Integer>> combinationSum(ArrayList<Integer> arr, int sum)
+    {
+        // add your code here
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        ArrayList<Integer> temp=new ArrayList<>();
+        Set<Integer> set=new HashSet<>(arr);
+        arr.clear();
+        arr.addAll(set);
+        Collections.sort(arr);
+        
+        int idx=0;
+        findSum(arr,ans,temp,idx,sum);
+        
+        return ans;
+    }
+    public static void findSum(ArrayList<Integer> arr,ArrayList<ArrayList<Integer>> ans,ArrayList<Integer> temp,int idx,int sum){
+        if(sum==0){
+            ans.add(new ArrayList<>(temp));
+            return;
+        }
+        for(int i=idx;i< arr.size();i++){
+            if(sum-arr.get(i)>=0){
+                temp.add(arr.get(i));
+                findSum(arr,ans,temp,i,sum-arr.get(i)); //including
+                
+                temp.remove(temp.size()-1); //Escluding
+                
+            }
+        }
+        
+    }
+}
